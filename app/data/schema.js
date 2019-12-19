@@ -19,16 +19,24 @@ const typeDefs = `
     content: String!
     user: User!
   }
+  type Track {
+    id: Int!
+    proposal_id: String!
+    latitude: Float
+    longitude: Float
+  }
   type Query {
     allUsers: [User]
     fetchUser(id: Int!): User
     allPosts: [Post]
     fetchPost(id: Int!): Post
+    allTracks: [Track]
   }
   type Mutation {
     login (email: String!, password: String!): String
     createUser (username: String!, email: String!, password: String!): User
     addPost (title: String!, content: String!): Post
+    createTracking (proposal_id: String!, latitude: Float, longitude: Float): Track
   }
 `;
 

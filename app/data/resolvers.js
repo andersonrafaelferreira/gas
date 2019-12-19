@@ -4,9 +4,16 @@ const User = use("App/Models/User");
 const Post = use("App/Models/Post");
 const slugify = require("slugify");
 
+const Tracking = use("App/Models/Tracking");
+
 // Define resolvers
 const resolvers = {
   Query: {
+    // Fetch all trackings
+    async allTracks() {
+      const tracks = await Tracking.all();
+      return tracks.toJSON();
+    },
     // Fetch all users
     async allUsers() {
       const users = await User.all();
@@ -30,6 +37,12 @@ const resolvers = {
   },
 
   Mutation: {
+    // Create new tracker geo
+    async createTracking(_, { proposal_id, latitude, longitude }) {
+      const track = await Tracking.create({ proposal_id, latitude, longitude });
+      return track;
+    },
+
     // Handles user login
     async login(_, { email, password }, { auth }) {
       const { token } = await auth.attempt(email, password);
